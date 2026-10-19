@@ -1,0 +1,15 @@
+Entregável IA - Sprint 2
+
+Integrantes:
+- Bruna Yukimy Hada - RM 571836
+- Denize Ferrante - RM 571562
+- Gabriel Del Pizzo Pintor - RM 570436
+- Gabriel Dias Menezes - RM 572395
+- Ian Rodrigues Martins - RM 570540
+- Patrick Fernandes Martins Pais - RM 572899
+
+Link do repositório GitHub:
+https://github.com/gabrieldiasmenezes/ChargeGridIA
+
+Link do vídeo de demonstração (YouTube - não listado):
+https://youtu.be/df1oUH81ziM

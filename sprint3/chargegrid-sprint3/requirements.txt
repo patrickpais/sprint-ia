@@ -1,0 +1,16 @@
+langchain
+langchain-core
+langchain-community
+langchain-openai
+langchain-text-splitters
+langgraph
+langgraph-checkpoint-sqlite
+pypdf
+unstructured
+openai
+python-dotenv
+lxml
+beautifulsoup4
+pandas
+anthropic
+tiktoken

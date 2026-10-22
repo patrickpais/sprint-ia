@@ -223,7 +223,9 @@ class JuizLLM:
             except TypeError:
                 # Versões mais novas do SDK não aceitam temperature; segue sem.
                 resp = self.client.messages.create(**kwargs)
-            return resp.content[0].text
+            # A resposta pode trazer blocos de raciocínio antes do texto;
+            # junta só os blocos de texto.
+            return "\n".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
         resp = self.client.chat.completions.create(
             model=self.modelo,
             temperature=0,  # juiz determinístico = resultados reprodutíveis
@@ -346,8 +348,11 @@ def gerar_planilha_manual(execucoes_v3: list[dict], avaliacoes_v3: list[dict], c
     (adequado / inadequado). Serve de base para o bloco C da rubrica:
     comparação entre avaliação manual e automatizada."""
     if caminho.exists():
-        print(f"  [manual] {caminho.name} já existe - não sobrescrevi (pode ter sido preenchida).")
-        return
+        linhas_existentes = sum(1 for _ in caminho.open(encoding="utf-8")) - 1
+        if linhas_existentes >= len(CASOS_SPRINT3):
+            print(f"  [manual] {caminho.name} já existe com {linhas_existentes} casos - não sobrescrevi (pode ter sido preenchida).")
+            return
+        print(f"  [manual] {caminho.name} estava incompleta ({linhas_existentes} casos) - regenerando.")
     por_id_exec = {e["id"]: e for e in execucoes_v3}
     por_id_aval = {a["id"]: a for a in avaliacoes_v3}
     with caminho.open("w", newline="", encoding="utf-8") as f:

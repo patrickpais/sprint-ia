@@ -1,0 +1,24 @@
+# Segredos
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Dados/gerados
+knowledge/*.pdf
+knowledge/*.docx
+*.sqlite
+*.sqlite3
+conversas_chatbot.jsonl
+resultados_*.json
+resultados_*.csv
+
+# SO / editores
+.DS_Store
+.vscode/
+
+# Sprint 4 - saidas geradas pelo pipeline (versionar so o resumo final)
+sprint4/resultados/respostas_*.json

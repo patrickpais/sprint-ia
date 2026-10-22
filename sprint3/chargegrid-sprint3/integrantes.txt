@@ -2,9 +2,9 @@ Projeto: ChargeGridIA - EV Challenge GoodWe (FIAP)
 Sprint: 03
 
 Integrantes:
-- Nome: Bruna Yukimy Hada | RM: 571836 | Turma: (preencher)
-- Nome: Denize Ferrante | RM: 571562 | Turma: (preencher)
-- Nome: Gabriel Del Pizzo Pintor | RM: 570436 | Turma: (preencher)
-- Nome: Gabriel Dias Menezes | RM: 572395 | Turma: (preencher)
-- Nome: Ian Rodrigues Martins | RM: 570540 | Turma: (preencher)
-- Nome: Patrick Fernandes Martins Pais | RM: 572899 | Turma: (preencher)
+- Nome: Bruna Yukimy Hada | RM: 571836 | Turma: 1CCPW
+- Nome: Denize Ferrante | RM: 571562 | Turma: 1CCPW
+- Nome: Gabriel Del Pizzo Pintor | RM: 570436 | Turma: 1CCPW
+- Nome: Gabriel Dias Menezes | RM: 572395 | Turma: 1CCPW
+- Nome: Ian Rodrigues Martins | RM: 570540 | Turma: 1CCPW
+- Nome: Patrick Fernandes Martins Pais | RM: 572899 | Turma: 1CCPW

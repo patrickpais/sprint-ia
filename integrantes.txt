@@ -1,0 +1,12 @@
+Projeto: ChargeGridIA - EV Challenge GoodWe (FIAP)
+Disciplina: Prompt and Artificial Intelligence
+Sprint: 04 - Avaliação sistemática do agente
+Repositório: https://github.com/patrickpais/sprint-ia
+
+Integrantes:
+- Nome: Patrick Fernandes Martins Pais | RM: 572899 | Turma: 1CCPW
+- Nome: Bruna Yukimy Hada              | RM: 571836 | Turma: 1CCPW
+- Nome: Denize Ferrante                | RM: 571562 | Turma: 1CCPW
+- Nome: Gabriel Del Pizzo Pintor       | RM: 570436 | Turma: 1CCPW
+- Nome: Gabriel Dias Menezes           | RM: 572395 | Turma: 1CCPW
+- Nome: Ian Rodrigues Martins          | RM: 570540 | Turma: 1CCPW

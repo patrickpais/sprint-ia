@@ -8,8 +8,8 @@ __pycache__/
 venv/
 
 # Dados/gerados
-knowledge/*.pdf
-knowledge/*.docx
+**/knowledge/*.pdf
+**/knowledge/*.docx
 *.sqlite
 *.sqlite3
 conversas_chatbot.jsonl

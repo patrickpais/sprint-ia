@@ -53,7 +53,11 @@ from dotenv import load_dotenv  # noqa: E402
 
 load_dotenv(RAIZ_SPRINT3 / ".env")
 
-MODELO_JUIZ = os.getenv("GOODWE_JUDGE_MODEL", "gpt-4o")
+# Juiz: por padrão usa um modelo de OUTRO fornecedor (Anthropic) do que o
+# agente (OpenAI), para reduzir o viés de autoavaliação. Troque no .env:
+#   GOODWE_JUDGE_PROVIDER=openai   GOODWE_JUDGE_MODEL=gpt-4o
+PROVEDOR_JUIZ = os.getenv("GOODWE_JUDGE_PROVIDER", "anthropic").lower()
+MODELO_JUIZ = os.getenv("GOODWE_JUDGE_MODEL", "claude-sonnet-5-5" if PROVEDOR_JUIZ == "anthropic" else "gpt-4o")
 
 # IDs do golden dataset que correspondem aos 9 casos originais da Sprint 3
 # (usados para gerar a planilha da avaliação manual, bloco C da rubrica).
@@ -187,12 +191,45 @@ Responda SOMENTE com um JSON no formato:
 """
 
 
-class JuizLLM:
-    def __init__(self, modelo: str = MODELO_JUIZ):
-        from openai import OpenAI
+def _extrair_json(texto: str) -> dict:
+    """Aceita JSON puro ou JSON dentro de ```...``` (alguns modelos cercam)."""
+    texto = texto.strip()
+    if texto.startswith("```"):
+        texto = texto.strip("`").split("\n", 1)[1] if "\n" in texto else texto.strip("`")
+        texto = texto.rsplit("```", 1)[0]
+    inicio, fim = texto.find("{"), texto.rfind("}")
+    return json.loads(texto[inicio:fim + 1])
 
-        self.client = OpenAI()
+
+class JuizLLM:
+    def __init__(self, modelo: str = MODELO_JUIZ, provedor: str = PROVEDOR_JUIZ):
         self.modelo = modelo
+        self.provedor = provedor
+        if provedor == "anthropic":
+            from anthropic import Anthropic
+
+            self.client = Anthropic()
+        else:
+            from openai import OpenAI
+
+            self.client = OpenAI()
+
+    def _chamar(self, prompt: str) -> str:
+        if self.provedor == "anthropic":
+            resp = self.client.messages.create(
+                model=self.modelo,
+                max_tokens=500,
+                temperature=0,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            return resp.content[0].text
+        resp = self.client.chat.completions.create(
+            model=self.modelo,
+            temperature=0,  # juiz determinístico = resultados reprodutíveis
+            response_format={"type": "json_object"},
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return resp.choices[0].message.content
 
     def julgar(self, caso: dict, execucao: dict, definicoes: dict) -> dict:
         criterios = caso["criterios"]
@@ -208,13 +245,7 @@ class JuizLLM:
             criterio_aceite=caso["criterio_aceite"],
             chaves=", ".join(f'"{c}": 0' for c in criterios),
         )
-        resp = self.client.chat.completions.create(
-            model=self.modelo,
-            temperature=0,  # juiz determinístico = resultados reprodutíveis
-            response_format={"type": "json_object"},
-            messages=[{"role": "user", "content": prompt}],
-        )
-        dados = json.loads(resp.choices[0].message.content)
+        dados = _extrair_json(self._chamar(prompt))
         notas = {c: float(dados["notas"].get(c, 0)) for c in criterios}
         return {"notas": notas, "justificativa": dados.get("justificativa", "")}
 

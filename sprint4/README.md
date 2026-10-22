@@ -33,9 +33,10 @@ Cada caso só é avaliado nas métricas que fazem sentido para ele (campo
 média das notas dos casos. Nota por métrica = média só nos casos em que
 ela se aplica.
 
-Juiz: `gpt-4o` com `temperature=0` (configurável por `GOODWE_JUDGE_MODEL`
-no `.env`). O juiz é um modelo diferente do agente (`gpt-4o-mini`) para
-reduzir o viés de autoavaliação.
+Juiz: `claude-sonnet-5-5` (Anthropic) com `temperature=0`, configurável por
+`GOODWE_JUDGE_PROVIDER` e `GOODWE_JUDGE_MODEL` no `.env`. O juiz é de outro
+fornecedor que o agente (`gpt-4o-mini`, OpenAI) para reduzir o viés de
+autoavaliação.
 
 ## Como rodar
 

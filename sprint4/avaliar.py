@@ -216,12 +216,13 @@ class JuizLLM:
 
     def _chamar(self, prompt: str) -> str:
         if self.provedor == "anthropic":
-            resp = self.client.messages.create(
-                model=self.modelo,
-                max_tokens=500,
-                temperature=0,
-                messages=[{"role": "user", "content": prompt}],
-            )
+            kwargs = dict(model=self.modelo, max_tokens=500,
+                          messages=[{"role": "user", "content": prompt}])
+            try:
+                resp = self.client.messages.create(temperature=0, **kwargs)
+            except TypeError:
+                # Versões mais novas do SDK não aceitam temperature; segue sem.
+                resp = self.client.messages.create(**kwargs)
             return resp.content[0].text
         resp = self.client.chat.completions.create(
             model=self.modelo,

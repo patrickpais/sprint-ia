@@ -21,4 +21,4 @@ resultados_*.csv
 .vscode/
 
 # Sprint 4 - saidas geradas pelo pipeline (versionar so o resumo final)
-sprint4/resultados/respostas_*.json
+# (respostas brutas versionadas de propósito: sao evidencia da avaliacao)
